@@ -20,4 +20,21 @@ describe 'GET /api/v1/movies' do
       expect(json_response.first.keys).to match_array(%w[id title release_year])
     end
   end
+
+  describe 'when :show' do
+    let!(:movie) {FactoryBot.create(:movie) }
+
+    before { get "/api/v1/movies/#{movie.id}", headers: { 'Accept': 'application/vnd' } }
+
+    it 'returns HTTP status 200' do
+      expect(response).to have_http_status 200
+    end
+
+    it 'return movie' do
+      json_response = JSON.parse(response.body)
+      expect(json_response['id']).to eq(1)
+      expect(json_response['title']).to eq(movie.title)
+      expect(json_response['release_year']).to eq(movie.release_year)
+    end
+  end
 end
