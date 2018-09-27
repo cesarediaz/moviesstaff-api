@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     namespace :v1, defaults: { format: 'json' } do
       get 'movies' => 'movies#index'
       get 'movies/:id' => 'movies#show'
+
+      get 'people' => 'people#index'
+      get 'people/:id' => 'people#show'
     end
   end
 
