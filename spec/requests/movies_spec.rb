@@ -32,9 +32,9 @@ describe 'GET /api/v1/movies' do
 
     it 'return movie' do
       json_response = JSON.parse(response.body)
-      expect(json_response['id']).to eq(1)
-      expect(json_response['title']).to eq(movie.title)
-      expect(json_response['release_year']).to eq(movie.release_year)
+      expect(json_response['movie']['id']).to eq(movie.id)
+      expect(json_response['movie']['title']).to eq(movie.title)
+      expect(json_response['movie']['release_year']).to eq(Movie.romanize(movie.release_year))
     end
   end
 end
