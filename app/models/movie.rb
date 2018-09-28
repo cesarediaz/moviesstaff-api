@@ -27,4 +27,17 @@ class Movie < ApplicationRecord
       ltr * amt
     end.join
   end
+
+  def directors
+    people.where('movies_people.role = ?', 'director')
+  end
+
+  def producers
+    people.where('movies_people.role = ?', 'producer')
+  end
+
+  def casting
+    people.where('movies_people.role = ?', 'actor')
+  end
+  
 end
