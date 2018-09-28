@@ -5,7 +5,6 @@ class Api::V1::PeopleController < ApplicationController
   end
 
   def show
-    @person = Person.find params[:id]
-    render json: @person
+    @person = Person.find(params[:id])
   end
 end
