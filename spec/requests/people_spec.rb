@@ -30,12 +30,29 @@ describe 'GET /api/v1/people' do
       expect(response).to have_http_status 200
     end
 
-    it 'return movie' do
+    it 'return person' do
       json_response = JSON.parse(response.body)
       expect(json_response['person']['id']).to eq(1)
       expect(json_response['person']['first_name']).to eq(person.first_name)
       expect(json_response['person']['last_name']).to eq(person.last_name)
       expect(json_response['person']['aliases']).to eq(person.aliases)
+    end
+
+    it "return key 'person'" do
+      json_response = JSON.parse(response.body)
+      expect(json_response.keys.include?('person')).to eq true
+    end
+
+    it "return key 'movies'" do
+      json_response = JSON.parse(response.body)
+      expect(json_response.keys.include?('movies')).to eq true
+    end
+
+    it 'return keys as_director, as_producer, as_actor' do
+      json_response = JSON.parse(response.body)["movies"]
+      expect(json_response.keys.include?('as_director')).to eq true
+      expect(json_response.keys.include?('as_producer')).to eq true
+      expect(json_response.keys.include?('as_actor')).to eq true
     end
   end
 end
