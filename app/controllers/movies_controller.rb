@@ -19,16 +19,7 @@ class MoviesController < ActionController::Base
 
     respond_to do |format|
       if @movie.save
-
-        MoviesPerson.where(movie_id: @movie.id, role: :director).delete_all
-        createStaff(params['directors'], :director) if params.has_key?('directors')
-
-        MoviesPerson.where(movie_id: @movie.id, role: :producer).delete_all
-        createStaff(params['producers'], :producer) if params.has_key?('producers')
-
-        MoviesPerson.where(movie_id: @movie.id, role: :actor).delete_all
-        createStaff(params['casting'], :actor) if params.has_key?('casting')
-
+        setStaffForMovie(@movie)
         format.html { redirect_to movies_path, notice: 'Movie was successfully created.' }
       else
         format.html { render action: "new" }
@@ -48,14 +39,7 @@ class MoviesController < ActionController::Base
 
     respond_to do |format|
       if @movie.update_attributes(movies_params)
-        MoviesPerson.where(movie_id: @movie.id, role: :director).delete_all
-        createStaff(params['directors'], :director) if params.has_key?('directors')
-
-        MoviesPerson.where(movie_id: @movie.id, role: :producer).delete_all
-        createStaff(params['producers'], :producer) if params.has_key?('producers')
-
-        MoviesPerson.where(movie_id: @movie.id, role: :actor).delete_all
-        createStaff(params['casting'], :actor) if params.has_key?('casting')
+        setStaffForMovie(@movie)
 
         format.html { redirect_to movies_path, notice: 'Movie was successfully updated.' }
       else
@@ -75,7 +59,18 @@ class MoviesController < ActionController::Base
 
   private
 
-  def createStaff(params, role)
+  def setStaffForMovie(movie)
+    MoviesPerson.where(movie_id: movie.id, role: :director).delete_all
+    staff(params['directors'], :director) if params.has_key?('directors')
+
+    MoviesPerson.where(movie_id: movie.id, role: :producer).delete_all
+    staff(params['producers'], :producer) if params.has_key?('producers')
+
+    MoviesPerson.where(movie_id: movie.id, role: :actor).delete_all
+    staff(params['casting'], :actor) if params.has_key?('casting')
+  end
+
+  def staff(params, role)
     params.each do |id|
       MoviesPerson.create(movie_id: @movie.id, person_id: id, role: role)
     end
