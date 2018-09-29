@@ -1,4 +1,10 @@
-User.create(email: "user@moviesstaff-api.com", password: "$123#!", password_confirmation: "$123#!")
+unless User.exists?(email: 'user@moviesstaff-api.com')
+  User.create(email: 'user@moviesstaff-api.com', password: '$123#!', password_confirmation: '$123#!')
+end
+
+
+Person.delete_all
+Movie.delete_all
 
 5.times do
   Person.create do |person|

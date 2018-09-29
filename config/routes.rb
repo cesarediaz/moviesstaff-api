@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   devise_for :users, skip: [:registrations]
   
+  get 'reload_seed', to: 'home#reload_seed', as: :reload
   resources :people
   resources :movies
 
