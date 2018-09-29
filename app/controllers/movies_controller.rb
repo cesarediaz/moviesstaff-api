@@ -8,6 +8,9 @@ class MoviesController < ActionController::Base
 
   def new
     @movie = Movie.new
+    @directors = @movie.directors.pluck(:id)
+    @producers = @movie.producers.pluck(:id)
+    @casting = @movie.casting.pluck(:id)
 
     respond_to do |format|
       format.html
@@ -19,6 +22,15 @@ class MoviesController < ActionController::Base
 
     respond_to do |format|
       if @movie.save
+        MoviesPerson.where(movie_id: @movie.id, role: :director).delete_all
+        createStaff(params['directors'], :director) if params.has_key?('directors')
+
+        MoviesPerson.where(movie_id: @movie.id, role: :producer).delete_all
+        createStaff(params['producers'], :producer) if params.has_key?('producers')
+
+        MoviesPerson.where(movie_id: @movie.id, role: :actor).delete_all
+        createStaff(params['casting'], :actor) if params.has_key?('casting')
+
         format.html { redirect_to movies_path, notice: 'Movie was successfully created.' }
       else
         format.html { render action: "new" }
@@ -28,6 +40,9 @@ class MoviesController < ActionController::Base
 
   def edit
     @movie = Movie.find(params[:id])
+    @directors = @movie.directors.pluck(:id)
+    @producers = @movie.producers.pluck(:id)
+    @casting = @movie.casting.pluck(:id)
   end
 
   def update
@@ -35,7 +50,16 @@ class MoviesController < ActionController::Base
 
     respond_to do |format|
       if @movie.update_attributes(movies_params)
-        format.html { redirect_to movies_path, notice: 'Ad was successfully updated.' }
+        MoviesPerson.where(movie_id: @movie.id, role: :director).delete_all
+        createStaff(params['directors'], :director) if params.has_key?('directors')
+
+        MoviesPerson.where(movie_id: @movie.id, role: :producer).delete_all
+        createStaff(params['producers'], :producer) if params.has_key?('producers')
+
+        MoviesPerson.where(movie_id: @movie.id, role: :actor).delete_all
+        createStaff(params['casting'], :actor) if params.has_key?('casting')
+
+        format.html { redirect_to movies_path, notice: 'Movie was successfully updated.' }
       else
         format.html { render action: "edit" }
       end
@@ -53,11 +77,18 @@ class MoviesController < ActionController::Base
 
   private
 
+  def createStaff(params, role)
+    params.each do |id|
+      MoviesPerson.create(movie_id: @movie.id, person_id: id, role: role)
+    end
+  end
+  
+
   def current_year
     @current_year = Date.today.year
   end
 
   def movies_params
-    params.require(:movie).permit(:title, :release_year)
+    params.require(:movie).permit(:title, :release_year, producers: [], directors: [], casting: [] )
   end
 end
