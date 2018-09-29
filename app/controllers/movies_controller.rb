@@ -1,5 +1,6 @@
 class MoviesController < ActionController::Base
   layout 'application'
+  before_action :current_year, only: [:new, :edit]
 
   def index
     @movies = Movie.all
@@ -23,7 +24,6 @@ class MoviesController < ActionController::Base
         format.html { render action: "new" }
       end
     end
-
   end
 
   def edit
@@ -50,10 +50,14 @@ class MoviesController < ActionController::Base
       format.html { redirect_to movies_url }
     end
   end
-  
+
   private
 
+  def current_year
+    @current_year = Date.today.year
+  end
+
   def movies_params
-    params.require(:movie).permit(:id, :title, :release_year)
+    params.require(:movie).permit(:title, :release_year)
   end
 end

@@ -16,9 +16,15 @@
       <label for="title">Title</label>
       <%= f.text_field :title, class: "form-control", placeholder: "Title" %>
     </div>
-    <div class="form-group col-md-6">
-      <label for="releaseYear">Release year</label>
-        <%= f.number_field :release_year, class: "form-control-plaintext", placeholder: "Release year" %>
+    <div class="form-group col-md-4">
+      <label for="inputState">Release Year</label>
+      <select id="movie[release_year]" name="movie[release_year]" class="form-control">
+        <option selected><%= @current_year %></option>
+        <% (1950..@current_year).each do |year| %>
+          <% selected = year == @movie.release_year ? 'selected' : '' %>
+          <option value="<%= year %>" <%= selected %>><%= year %></option>
+        <% end %>
+      </select>
     </div>
   </div>
   <div class="actions">
