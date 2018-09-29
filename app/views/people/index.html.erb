@@ -1,4 +1,9 @@
 <%= link_to 'Add Person', new_person_path, class: "btn btn-primary btn-lg" %>
+<hr />
+
+<div class="container pagination justify-content-center" >
+  <%= paginate @people, theme: 'twitter-bootstrap-4', pagination_class: "pagination-sm" %>
+</div>
 
 <table class="table">
   <thead>
@@ -30,4 +35,6 @@
   </tbody>
 </table>
 
-
+<div class="container pagination justify-content-center" >
+  <%= paginate @people, theme: 'twitter-bootstrap-4', pagination_class: "pagination-sm" %>
+</div>

@@ -1,6 +1,6 @@
 class MoviesController < ActionController::Base
   layout 'application'
-  before_action :current_year, only: [:new, :edit]
+  before_action :current_year, only: [:new, :edit, :create]
 
   def index
     @movies = Movie.order(:title).page params[:page]

@@ -2,7 +2,7 @@ class PeopleController < ActionController::Base
   layout 'application'
   
   def index
-    @people = Person.all.order(:first_name, :last_name)
+    @people = Person.order(:first_name, :last_name).page params[:page]
   end
 
   def new

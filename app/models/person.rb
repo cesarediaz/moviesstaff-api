@@ -1,4 +1,6 @@
 class Person < ApplicationRecord
+  paginates_per 5
+  
   validates :last_name, :first_name, :aliases, presence: true
 
   has_many :movies_person
