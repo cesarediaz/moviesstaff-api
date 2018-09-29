@@ -32,7 +32,7 @@ describe 'GET /api/v1/people' do
 
     it 'return person' do
       json_response = JSON.parse(response.body)
-      expect(json_response['person']['id']).to eq(1)
+      expect(json_response['person']['id']).to eq(person.id)
       expect(json_response['person']['first_name']).to eq(person.first_name)
       expect(json_response['person']['last_name']).to eq(person.last_name)
       expect(json_response['person']['aliases']).to eq(person.aliases)

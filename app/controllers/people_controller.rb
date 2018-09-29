@@ -7,10 +7,6 @@ class PeopleController < ActionController::Base
 
   def new
     @person = Person.new
-
-    respond_to do |format|
-      format.html
-    end
   end
 
   def create
@@ -44,10 +40,7 @@ class PeopleController < ActionController::Base
   def destroy
     @person = Person.find(params[:id])
     @person.destroy
-
-    respond_to do |format|
-      format.html { redirect_to people_url }
-    end
+    redirect_to people_url
   end
 
   private

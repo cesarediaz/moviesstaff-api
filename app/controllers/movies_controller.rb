@@ -1,6 +1,8 @@
 class MoviesController < ActionController::Base
   layout 'application'
-  before_action :current_year, only: [:new, :edit, :create]
+  before_action :current_year, only: [:new, :edit, :update, :create]
+  before_action :getMovie, only: [:edit, :update, :destroy]
+  before_action :currentStaff, only: [:edit, :update]
 
   def index
     @movies = Movie.order(:title).page params[:page]
@@ -8,10 +10,6 @@ class MoviesController < ActionController::Base
 
   def new
     @movie = Movie.new
-
-    respond_to do |format|
-      format.html
-    end
   end
 
   def create
@@ -28,15 +26,9 @@ class MoviesController < ActionController::Base
   end
 
   def edit
-    @movie = Movie.find(params[:id])
-    @directors = @movie.directors.pluck(:id)
-    @producers = @movie.producers.pluck(:id)
-    @casting = @movie.casting.pluck(:id)
   end
 
   def update
-    @movie = Movie.find(params[:id])
-
     respond_to do |format|
       if @movie.update_attributes(movies_params)
         setStaffForMovie(@movie)
@@ -49,15 +41,21 @@ class MoviesController < ActionController::Base
   end
 
   def destroy
-    @movie = Movie.find(params[:id])
     @movie.destroy
-
-    respond_to do |format|
-      format.html { redirect_to movies_url }
-    end
+    redirect_to movies_url
   end
 
   private
+
+  def currentStaff
+    @directors = @movie.directors.pluck(:id)
+    @producers = @movie.producers.pluck(:id)
+    @casting = @movie.casting.pluck(:id)
+  end
+
+  def getMovie
+    @movie = Movie.find(params[:id])
+  end
 
   def setStaffForMovie(movie)
     MoviesPerson.where(movie_id: movie.id, role: :director).delete_all
@@ -75,7 +73,6 @@ class MoviesController < ActionController::Base
       MoviesPerson.create(movie_id: @movie.id, person_id: id, role: role)
     end
   end
-  
 
   def current_year
     @current_year = Date.today.year
