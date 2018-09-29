@@ -2,7 +2,7 @@ class Person < ApplicationRecord
   validates :last_name, :first_name, :aliases, presence: true
 
   has_many :movies_person
-  has_many :movies, through: :movies_person, source: :movie
+  has_many :movies, through: :movies_person, source: :movie, dependent: :destroy
   
 
   def as_director

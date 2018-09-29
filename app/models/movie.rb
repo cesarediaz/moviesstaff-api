@@ -3,7 +3,7 @@ class Movie < ApplicationRecord
   validates :release_year, numericality: true
 
   has_many :movies_person
-  has_many :people, through: :movies_person, source: :person
+  has_many :people, through: :movies_person, source: :person, dependent: :destroy
 
   ROMAN_NUMS = {
     'M' => 1000,
