@@ -3,14 +3,11 @@ class MoviesController < ActionController::Base
   before_action :current_year, only: [:new, :edit]
 
   def index
-    @movies = Movie.all
+    @movies = Movie.all.order(:title)
   end
 
   def new
     @movie = Movie.new
-    @directors = @movie.directors.pluck(:id)
-    @producers = @movie.producers.pluck(:id)
-    @casting = @movie.casting.pluck(:id)
 
     respond_to do |format|
       format.html
@@ -22,6 +19,7 @@ class MoviesController < ActionController::Base
 
     respond_to do |format|
       if @movie.save
+
         MoviesPerson.where(movie_id: @movie.id, role: :director).delete_all
         createStaff(params['directors'], :director) if params.has_key?('directors')
 
