@@ -3,7 +3,7 @@ class MoviesController < ActionController::Base
   before_action :current_year, only: [:new, :edit]
 
   def index
-    @movies = Movie.all.order(:title)
+    @movies = Movie.order(:title).page params[:page]
   end
 
   def new

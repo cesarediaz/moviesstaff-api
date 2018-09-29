@@ -1,4 +1,6 @@
 class Movie < ApplicationRecord
+  paginates_per 5
+
   validates :title, :release_year, presence: true
   validates :release_year, numericality: true
 

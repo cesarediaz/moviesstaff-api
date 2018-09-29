@@ -1,4 +1,10 @@
 <%= link_to 'Add Movie', new_movie_path, class: "btn btn-primary btn-lg" %>
+<hr />
+
+<div class="container pagination justify-content-center" >
+  <%= paginate @movies, theme: 'twitter-bootstrap-4', pagination_class: "pagination-sm" %>
+</div>
+
 <table class="table">
   <thead>
     <tr>
@@ -24,3 +30,7 @@
     <% end %>
   </tbody>
 </table>
+
+<div class="container pagination justify-content-center" >
+  <%= paginate @movies, theme: 'twitter-bootstrap-4', pagination_class: "pagination-sm" %>
+</div>
