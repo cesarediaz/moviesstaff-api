@@ -1,0 +1,26 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">First name</th>
+      <th scope="col">Last name</th>
+      <th scope="col">Aliases</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @people.each do |people| %>
+      <tr>
+        <td>
+          <%= people.first_name %>
+        </td>
+        <td>
+          <%= people.last_name %>
+        </td>
+        <td>
+          <%= people.aliases %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+

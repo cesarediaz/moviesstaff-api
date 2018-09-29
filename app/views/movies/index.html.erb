@@ -1,0 +1,26 @@
+<%= link_to 'Add Movie', new_movie_path, class: "btn btn-primary pull-left" %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Release year</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movies.each do |movie| %>
+      <tr>
+        <th scope="row">
+            <%= movie[:title] %>
+        </th>
+        <td>
+          <%= Movie.romanize(movie[:release_year]) %>
+        </td>
+        <td>
+          <%= link_to 'Edit Movie', edit_movie_path(movie), class: "btn btn-secondary" %>
+          <%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
