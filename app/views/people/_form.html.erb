@@ -1,0 +1,32 @@
+
+<%= form_for(@person) do |f| %>
+  <% if @person.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@person.errors.count, "error") %> prohibited this ad from being saved:</h2>
+
+      <ul>
+      <% @person.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="first_name">First Name</label>
+      <%= f.text_field :first_name, class: "form-control", placeholder: "First name" %>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="last_name">Last Name</label>
+      <%= f.text_field :last_name, class: "form-control", placeholder: "Last name" %>
+    </div>    
+    <div class="form-group col-md-6">
+      <label for="aliases">Aliases</label>
+      <%= f.text_field :aliases, class: "form-control", placeholder: "Aliases" %>
+    </div>    
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+   </div> 
+<% end %>

@@ -1,22 +1,29 @@
+<%= link_to 'Add Person', new_person_path, class: "btn btn-primary pull-left" %>
+
 <table class="table">
   <thead>
     <tr>
       <th scope="col">First name</th>
       <th scope="col">Last name</th>
       <th scope="col">Aliases</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
-    <% @people.each do |people| %>
+    <% @people.each do |person| %>
       <tr>
         <td>
-          <%= people.first_name %>
+          <%= person.first_name %>
         </td>
         <td>
-          <%= people.last_name %>
+          <%= person.last_name %>
         </td>
         <td>
-          <%= people.aliases %>
+          <%= person.aliases %>
+        </td>
+        <td>
+          <%= link_to 'Edit Person', edit_person_path(person), class: "btn btn-secondary" %>
+          <%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
         </td>
       </tr>
     <% end %>
