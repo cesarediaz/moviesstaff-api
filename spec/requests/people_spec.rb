@@ -17,7 +17,7 @@ describe 'GET /api/v1/people' do
 
     it 'should match keys' do
       json_response = JSON.parse(response.body)
-      expect(json_response.first.keys).to match_array(%w[aliases first_name id last_name])
+      expect(json_response.first.keys).to match_array(%w[aliases first_name id last_name movies])
     end
   end
 

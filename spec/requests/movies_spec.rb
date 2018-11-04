@@ -17,7 +17,7 @@ describe 'GET /api/v1/movies' do
 
     it 'should match keys' do
       json_response = JSON.parse(response.body)
-      expect(json_response.first.keys).to match_array(%w[id title release_year])
+      expect(json_response.first.keys).to match_array(%w[casting directors id producers release_year title])
     end
   end
 
@@ -32,17 +32,16 @@ describe 'GET /api/v1/movies' do
 
     it 'return movie' do
       json_response = JSON.parse(response.body)
-      expect(json_response['movie']['id']).to eq(movie.id)
-      expect(json_response['movie']['title']).to eq(movie.title)
-      expect(json_response['movie']['release_year']).to eq(Movie.romanize(movie.release_year))
+      expect(json_response['id']).to eq(movie.id)
+      expect(json_response['title']).to eq(movie.title)
+      expect(json_response['release_year']).to eq(Movie.romanize(movie.release_year))
     end
 
     it 'return keys directors, producers, casting' do
-      json_response = JSON.parse(response.body)["movie"]
+      json_response = JSON.parse(response.body)
       expect(json_response.keys.include?('directors')).to eq true
       expect(json_response.keys.include?('producers')).to eq true
       expect(json_response.keys.include?('casting')).to eq true
     end
-
   end
 end
