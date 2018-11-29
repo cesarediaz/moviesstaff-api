@@ -31,15 +31,20 @@ class Movie < ApplicationRecord
   end
 
   def directors
-    people.where('movies_people.role = ?', 'director')
+    staff_with_role('director')
   end
 
   def producers
-    people.where('movies_people.role = ?', 'producer')
+    staff_with_role('producer')
   end
 
   def casting
-    people.where('movies_people.role = ?', 'actor')
+    staff_with_role('actor')
   end
-  
+
+  private
+
+  def staff_with_role(role)
+    people.where('movies_people.role = ?', role)
+  end
 end

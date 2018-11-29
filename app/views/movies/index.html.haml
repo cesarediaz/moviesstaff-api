@@ -1,0 +1,22 @@
+= link_to 'Add Movie', new_movie_path, class: "btn btn-primary btn-lg"
+%hr/
+.container.pagination.justify-content-center
+  = paginate @movies, theme: 'twitter-bootstrap-4', pagination_class: "pagination-sm"
+%table.table
+  %thead
+    %tr
+      %th{scope: "col"} Title
+      %th{scope: "col"} Release year
+      %th{scope: "col"} Actions
+  %tbody
+    - @movies.each do |movie|
+      %tr
+        %th{scope: "row"}
+          = movie[:title]
+        %td
+          = Movie.romanize(movie[:release_year])
+        %td
+          = link_to 'Edit Movie', edit_movie_path(movie), class: "btn btn-secondary"
+          = link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+.container.pagination.justify-content-center
+  = paginate @movies, theme: 'twitter-bootstrap-4', pagination_class: "pagination-sm"

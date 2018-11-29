@@ -1,0 +1,8 @@
+- if obj.errors.any?
+  #error_explanation.p-3.mb-2.bg-danger.text-white
+    %p
+      = pluralize(obj.errors.count, "error")
+      prohibited this ad from being saved:
+    %ul
+      - obj.errors.full_messages.each do |msg|
+        %li= msg

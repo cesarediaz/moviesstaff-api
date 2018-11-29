@@ -1,0 +1,37 @@
+!!!
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Moviesstaff
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    / Navigation
+    %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.static-top
+      .container
+        %a.navbar-brand{href: "#"} Movies Staff
+        %button.navbar-toggler{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", type: "button"}
+          %span.navbar-toggler-icon
+        #navbarResponsive.collapse.navbar-collapse
+          %ul.navbar-nav.ml-auto
+            - if current_user
+              %li.nav-item.active
+                %a.nav-link{href: "/"}
+                  Home
+                  %span.sr-only (current)
+              %li.nav-item
+                %a.nav-link{href: "/people"} People
+              %li.nav-item
+                %a.nav-link{href: "/movies"} Movies
+            %li.nav-item
+              - if current_user
+                %a.nav-link{href: "/users/sign_out"} Logout
+              - else
+                %a.nav-link{href: "/users/sign_in"} Login
+    / Page Content
+    .container
+      .row
+        .col-lg-12
+          = yield
