@@ -1,0 +1,11 @@
+.form-group.col-md-4
+  %label{for: "title"}= role.titleize
+  %select{name: ""}
+  = role[]
+    class="mdb-select md-form colorful-select dropdown-primary custom-select" multiple searchable="Search here.."&gt;
+  \#{people.each do |person|}
+    - unless movie.new_record?
+      - selected = staff.include?(person.id) ? 'selected' : ''
+    %option{value: ""}
+    = person.id
+    " #{selected}&gt;#{person.first_name}

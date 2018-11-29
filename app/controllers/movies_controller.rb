@@ -1,6 +1,7 @@
 class MoviesController < ActionController::Base
   layout 'application'
   before_action :current_year, only: [:new, :edit, :update, :create]
+  before_action :people, only: [:new, :edit, :update, :create]
   before_action :getMovie, only: [:edit, :update, :destroy]
   before_action :currentStaff, only: [:edit, :update]
 
@@ -76,6 +77,10 @@ class MoviesController < ActionController::Base
 
   def current_year
     @current_year = Date.today.year
+  end
+
+  def people
+    @people = Person.all
   end
 
   def movies_params

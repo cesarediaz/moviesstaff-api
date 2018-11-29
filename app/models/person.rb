@@ -5,17 +5,22 @@ class Person < ApplicationRecord
 
   has_many :movies_person
   has_many :movies, through: :movies_person, source: :movie, dependent: :destroy
-  
 
   def as_director
-    movies.where('movies_people.role = ?', 'director')
+    role_as('director')
   end
 
   def as_producer
-    movies.where('movies_people.role = ?', 'producer')
+    role_as('producer')
   end
 
   def as_actor
-    movies.where('movies_people.role = ?', 'actor')
+    role_as('actor')
+  end
+
+  private
+
+  def role_as(role)
+    movies.where('movies_people.role = ?', role)
   end
 end

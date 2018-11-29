@@ -1,0 +1,11 @@
+<div class="form-group col-md-4">
+  <label for="title"><%= role.titleize %></label>
+  <select name="<%= role %>[]" class="mdb-select md-form colorful-select dropdown-primary custom-select" multiple searchable="Search here..">
+    <%= people.each do |person| %>
+      <% unless movie.new_record? %>
+        <% selected = staff.include?(person.id) ? 'selected' : '' %>
+      <% end %>
+      <option value="<%= person.id %>" <%= selected %>><%= person.first_name %></option>
+    <% end %>
+  </select>
+</div>

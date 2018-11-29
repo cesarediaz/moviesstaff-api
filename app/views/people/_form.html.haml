@@ -1,0 +1,14 @@
+= form_for(@person) do |f|
+  = render partial: 'shared/errors', locals: {obj: @person}
+  .form-row
+    .form-group.col-md-6
+      %label{for: "first_name"} First Name
+      = f.text_field :first_name, class: "form-control", placeholder: "First name"
+    .form-group.col-md-6
+      %label{for: "last_name"} Last Name
+      = f.text_field :last_name, class: "form-control", placeholder: "Last name"
+    .form-group.col-md-6
+      %label{for: "aliases"} Aliases
+      = f.text_field :aliases, class: "form-control", placeholder: "Aliases"
+  .actions
+    = f.submit "Save", class: 'btn btn-primary'
