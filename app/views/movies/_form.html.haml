@@ -1,0 +1,21 @@
+= form_for(@movie) do |f|
+  = render partial: 'shared/errors', locals: {obj: @movie}
+  .form-row
+    .form-group.col-md-6
+      %label{for: "title"} Title
+      = f.text_field :title, class: "form-control", placeholder: "Title"
+    .form-group.col-md-4
+      %label{for: "inputState"} Release Year
+      %select.form-control{id: "movie[release_year]", name: "movie[release_year]"}
+        %option= @current_year
+        - (1950..@current_year).each do |year|
+          - selected = year == @movie.release_year ? 'selected' : ''
+          %option{value: ""}
+          = year
+          " #{selected}&gt;#{year}
+  .form-row
+    = render partial: 'people', locals: {movie: @movie, people: @people, staff: @directors, role: 'directors'}
+    = render partial: 'people', locals: {movie: @movie, people: @people, staff: @producers, role: 'producers'}
+    = render partial: 'people', locals: {movie: @movie, people: @people, staff: @casting, role: 'casting'}
+  .actions
+    = f.submit 'Save', class: 'btn btn-primary'

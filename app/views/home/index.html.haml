@@ -1,0 +1,6 @@
+%h1.mt-5 Movies Staff
+%ul.list-unstyled
+  %li People in different roles
+  %li Movies info
+- if current_user
+  = link_to 'Reload Data', reload_path, data: { confirm: 'This will reset all data in db about Movies, People and Staff.. Are you sure?' }, class: "btn btn-warning btn-lg"
