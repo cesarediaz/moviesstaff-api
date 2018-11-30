@@ -1,8 +1,7 @@
 class HomeController < ActionController::Base
   layout 'application'
-  
-  def index
-  end
+
+  def index;  end
 
   def reload_seed
     Rails.application.load_seed
