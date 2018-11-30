@@ -9,10 +9,9 @@
       %select.form-control{id: "movie[release_year]", name: "movie[release_year]"}
         %option= @current_year
         - (1950..@current_year).each do |year|
-          - selected = year == @movie.release_year ? 'selected' : ''
-          %option{value: ""}
-          = year
-          " #{selected}&gt;#{year}
+          - selected = year == @movie.release_year ? true : false
+          %option{value: "#{year}", selected: selected}
+            = year
   .form-row
     = render partial: 'people', locals: {movie: @movie, people: @people, staff: @directors, role: 'directors'}
     = render partial: 'people', locals: {movie: @movie, people: @people, staff: @producers, role: 'producers'}
