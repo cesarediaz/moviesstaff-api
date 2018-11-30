@@ -18,10 +18,10 @@ class MoviesController < ActionController::Base
 
     respond_to do |format|
       if @movie.save
-        setStaffForMovie(@movie)
+        StaffService.new(@movie, params).call
         format.html { redirect_to movies_path, notice: 'Movie was successfully created.' }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
       end
     end
   end
@@ -32,11 +32,10 @@ class MoviesController < ActionController::Base
   def update
     respond_to do |format|
       if @movie.update_attributes(movies_params)
-        setStaffForMovie(@movie)
-
+        StaffService.new(@movie, params).call
         format.html { redirect_to movies_path, notice: 'Movie was successfully updated.' }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
       end
     end
   end
@@ -56,23 +55,6 @@ class MoviesController < ActionController::Base
 
   def getMovie
     @movie = Movie.find(params[:id])
-  end
-
-  def setStaffForMovie(movie)
-    MoviesPerson.where(movie_id: movie.id, role: :director).delete_all
-    staff(params['directors'], :director) if params.has_key?('directors')
-
-    MoviesPerson.where(movie_id: movie.id, role: :producer).delete_all
-    staff(params['producers'], :producer) if params.has_key?('producers')
-
-    MoviesPerson.where(movie_id: movie.id, role: :actor).delete_all
-    staff(params['casting'], :actor) if params.has_key?('casting')
-  end
-
-  def staff(params, role)
-    params.each do |id|
-      MoviesPerson.create(movie_id: @movie.id, person_id: id, role: role)
-    end
   end
 
   def current_year
