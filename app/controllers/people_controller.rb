@@ -1,6 +1,6 @@
 class PeopleController < ActionController::Base
   layout 'application'
-  before_action :person, only: [:edit, :update, :destroy]
+  before_action :person, only: %i[edit update destroy]
 
   def index
     @people = Person.order(:first_name, :last_name).page params[:page]
@@ -17,7 +17,7 @@ class PeopleController < ActionController::Base
       if @person.save
         format.html { redirect_to people_path, notice: 'Person was successfully created.' }
       else
-        format.html { render action: 'new' }
+        format.html { render action: :new }
       end
     end
   end
@@ -29,7 +29,7 @@ class PeopleController < ActionController::Base
       if @person.update_attributes(person_params)
         format.html { redirect_to people_path, notice: 'Ad was successfully updated.' }
       else
-        format.html { render action: 'edit' }
+        format.html { render action: :edit }
       end
     end
   end
@@ -46,6 +46,8 @@ class PeopleController < ActionController::Base
   end
 
   def person_params
-    params.require(:person).permit(:first_name, :last_name, :aliases)
+    params.require(:person).permit(:first_name,
+                                   :last_name,
+                                   :aliases)
   end
 end
