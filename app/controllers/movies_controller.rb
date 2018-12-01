@@ -1,9 +1,9 @@
 class MoviesController < ActionController::Base
   layout 'application'
-  before_action :current_year, only: [:new, :edit, :update, :create]
-  before_action :people, only: [:new, :edit, :update, :create]
-  before_action :getMovie, only: [:edit, :update, :destroy]
-  before_action :currentStaff, only: [:edit, :update]
+  before_action :current_year, only: %i[new edit update create]
+  before_action :people, only: %i[new edit update create]
+  before_action :movie, only: %i[edit update destroy]
+  before_action :staff, only: %i[edit update]
 
   def index
     @movies = Movie.order(:title).page params[:page]
@@ -34,7 +34,7 @@ class MoviesController < ActionController::Base
         StaffService.new(@movie, params).call
         format.html { redirect_to movies_path, notice: 'Movie was successfully updated.' }
       else
-        format.html { render action: 'edit' }
+        format.html { render action: :edit }
       end
     end
   end
@@ -46,13 +46,13 @@ class MoviesController < ActionController::Base
 
   private
 
-  def currentStaff
+  def staff
     @directors = @movie.directors.pluck(:id)
     @producers = @movie.producers.pluck(:id)
     @casting = @movie.casting.pluck(:id)
   end
 
-  def getMovie
+  def movie
     @movie = Movie.find(params[:id])
   end
 
@@ -65,6 +65,10 @@ class MoviesController < ActionController::Base
   end
 
   def movies_params
-    params.require(:movie).permit(:title, :release_year, producers: [], directors: [], casting: [] )
+    params.require(:movie).permit(:title,
+                                  :release_year,
+                                  producers: [],
+                                  directors: [],
+                                  casting: [])
   end
 end
